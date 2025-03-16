@@ -1,0 +1,53 @@
+<div class="container infobox text-center">
+    <div class="d-flex align-items-center justify-content-center mb-1">
+        <img src="https://toolteeno.com/assets/tools/google_reviews.svg">
+        <h1 class="text-primary p-2">Generate Your Google Review Link & QR Code</h1>
+    </div>
+
+    <h2 class="text-secondary">Boost Customer Reviews with a Shareable Link</h2>
+    <h2 class="text-secondary">Why Use a Google Review QR Code?</h2>
+    <h2 class="text-secondary">How to Generate Your Google Review Link?</h2>
+    <h3 class="text-black-50">Step 1: Search for Your Business</h3>
+    <h3 class="text-black-50">Step 2: Copy or Share Your Review Link</h3>
+    <h3 class="text-black-50">Step 3: Generate a QR Code for Easy Access</h3>
+</div>
+
+<mat-card class="search-container">
+    <mat-form-field class="full-width">
+        <mat-label>Search for a place</mat-label>
+        <input matInput #searchInput type="text">
+    </mat-form-field>
+
+    <button mat-button (click)="generate()"> Generate </button>
+    <p *ngIf="placeId">Selected Place ID: <strong>{{ placeId }}</strong></p>
+</mat-card>
+
+<div *ngIf="placeId" class="container text-center">
+    your review link
+
+    <mat-card appearance="outlined" class="d-flex align-items-center justify-content-center">
+        <mat-card-content>
+            <code>
+                        http://search.google.com/local/writereview?placeid={{placeId}}
+                    </code>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button [cdkCopyToClipboard]="'http://search.google.com/local/writereview?placeid='+placeId"
+                (click)='openSnackBar("Your Link is copied", "YAY!")'><mat-icon>content_copy</mat-icon> Copy to
+                clipboard</button>
+        </mat-card-actions>
+    </mat-card>
+
+    <!-- New Button to Generate QR Code -->
+    <button mat-raised-button color="primary" (click)="generateQRCode()">Generate QR Code</button>
+
+    <!-- QR Code Display -->
+    <div *ngIf="qrData" class="qr-code-container">
+        <canvas #canvas></canvas>
+    </div>
+
+    <!-- Download Button -->
+    <button *ngIf="qrData" mat-button color="accent" (click)="downloadQRCode()">
+        <mat-icon>download</mat-icon> Download QR Code
+    </button>
+</div>
